@@ -3,7 +3,8 @@ import { Layout } from "@/components/Layout";
 import { Fireworks } from "@/components/Fireworks";
 import { ProductCard } from "@/components/ProductCard";
 import { categories, products, combos } from "@/lib/products";
-import { ArrowRight, Download, Star, Shield, Truck, Award, ChevronDown } from "lucide-react";
+import { useCart } from "@/lib/cart";
+import { ArrowRight, Download, Star, Shield, Truck, Award, ChevronDown, ShoppingBag } from "lucide-react";
 import hero from "@/assets/hero-fireworks.jpg";
 import { useState } from "react";
 
@@ -109,31 +110,7 @@ function Index() {
         <div className="relative mx-auto max-w-7xl px-6">
           <SectionHeader eyebrow="Limited Time" title="Curated combo boxes" />
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {combos.map((c) => {
-              const off = Math.round(((c.mrp - c.price) / c.mrp) * 100);
-              return (
-                <div key={c.id} className="group relative overflow-hidden rounded-3xl border border-[color:var(--gold)]/20 bg-card p-8 transition-all hover:border-[color:var(--gold)]/60 hover:ember-glow">
-                  <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30">
-                    <img src={c.image} alt="" loading="lazy" className="h-full w-full object-cover" />
-                  </div>
-                  <div className="relative">
-                    {c.tag && <span className="rounded-full gradient-gold-bg px-3 py-1 text-xs font-bold text-primary-foreground">{c.tag}</span>}
-                    <h3 className="mt-4 font-display text-2xl font-bold">{c.name}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{c.items} premium items</p>
-                    <div className="mt-8 flex items-baseline gap-3">
-                      <span className="text-4xl font-bold gradient-text">₹{c.price.toLocaleString()}</span>
-                      <span className="text-sm text-muted-foreground line-through">₹{c.mrp.toLocaleString()}</span>
-                      <span className="rounded bg-destructive/20 px-2 py-0.5 text-xs font-bold text-destructive">{off}% OFF</span>
-                    </div>
-                    <a href={`https://wa.me/919095040509?text=I%27d%20like%20to%20order%20${encodeURIComponent(c.name)}`}
-                      target="_blank" rel="noreferrer"
-                      className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full gradient-gold-bg py-3 font-semibold text-primary-foreground transition-transform hover:scale-[1.02]">
-                      Order this box <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
+            {combos.map((c) => <ComboCard key={c.id} c={c} />)}
           </div>
         </div>
       </section>
@@ -197,6 +174,41 @@ function Index() {
         </div>
       </section>
     </Layout>
+  );
+}
+
+function ComboCard({ c }: { c: typeof combos[number] }) {
+  const off = Math.round(((c.mrp - c.price) / c.mrp) * 100);
+  const { items, add, setQty, setOpen } = useCart();
+  const inCart = items.find((i) => i.id === c.id);
+  return (
+    <div className="group relative overflow-hidden rounded-3xl border border-[color:var(--gold)]/20 bg-card p-8 transition-all hover:border-[color:var(--gold)]/60 hover:ember-glow">
+      <div className="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-30">
+        <img src={c.image} alt="" loading="lazy" className="h-full w-full object-cover" />
+      </div>
+      <div className="relative">
+        {c.tag && <span className="rounded-full gradient-gold-bg px-3 py-1 text-xs font-bold text-primary-foreground">{c.tag}</span>}
+        <h3 className="mt-4 font-display text-2xl font-bold">{c.name}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{c.items} premium items</p>
+        <div className="mt-8 flex items-baseline gap-3">
+          <span className="text-4xl font-bold gradient-text">₹{c.price.toLocaleString()}</span>
+          <span className="text-sm text-muted-foreground line-through">₹{c.mrp.toLocaleString()}</span>
+          <span className="rounded bg-destructive/20 px-2 py-0.5 text-xs font-bold text-destructive">{off}% OFF</span>
+        </div>
+        {inCart ? (
+          <div className="mt-8 flex items-center justify-between rounded-full border border-[color:var(--gold)]/40 p-1.5">
+            <button onClick={() => setQty(c.id, inCart.qty - 1)} className="grid h-9 w-9 place-items-center rounded-full bg-secondary">−</button>
+            <span className="font-bold">{inCart.qty} in cart</span>
+            <button onClick={() => setQty(c.id, inCart.qty + 1)} className="grid h-9 w-9 place-items-center rounded-full gradient-gold-bg text-primary-foreground">+</button>
+          </div>
+        ) : (
+          <button onClick={() => { add({ id: c.id, name: c.name, price: c.price, mrp: c.mrp, image: c.image }); setOpen(true); }}
+            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full gradient-gold-bg py-3 font-semibold text-primary-foreground transition-transform hover:scale-[1.02]">
+            <ShoppingBag className="h-4 w-4" /> Add to Cart
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 
