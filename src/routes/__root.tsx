@@ -82,6 +82,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "CracklingWorks" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "CracklingWorks — Premium Sivakasi Crackers" },
+      { name: "twitter:title", content: "CracklingWorks — Premium Sivakasi Crackers" },
+      { property: "og:description", content: "Premium Sivakasi crackers — sparklers, rockets, sky shots & gift boxes at flat 70% off MRP." },
+      { name: "twitter:description", content: "Premium Sivakasi crackers — sparklers, rockets, sky shots & gift boxes at flat 70% off MRP." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d91ef9b8-fe49-4e16-881a-9085d87198d4" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d91ef9b8-fe49-4e16-881a-9085d87198d4" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
