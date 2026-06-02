@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkles, Menu, X } from "lucide-react";
+import { Sparkles, Menu, X, ShoppingBag } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/lib/cart";
 
 const links = [
   { to: "/", label: "Home" },
@@ -11,6 +12,18 @@ const links = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { totalItems, setOpen: setCartOpen } = useCart();
+  const CartButton = ({ className = "" }: { className?: string }) => (
+    <button onClick={() => setCartOpen(true)} aria-label="Open cart"
+      className={`relative grid h-10 w-10 place-items-center rounded-full border border-[color:var(--gold)]/40 hover:bg-[color:var(--gold)]/10 ${className}`}>
+      <ShoppingBag className="h-5 w-5 text-gold" />
+      {totalItems > 0 && (
+        <span className="absolute -right-1 -top-1 grid h-5 min-w-[1.25rem] place-items-center rounded-full gradient-gold-bg px-1 text-[10px] font-bold text-primary-foreground">
+          {totalItems}
+        </span>
+      )}
+    </button>
+  );
   return (
     <header className="sticky top-0 z-40 glass">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -29,14 +42,14 @@ export function Header() {
               {l.label}
             </Link>
           ))}
-          <a href="https://wa.me/919095040509" target="_blank" rel="noreferrer"
-            className="rounded-full gradient-gold-bg px-5 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105">
-            Order on WhatsApp
-          </a>
+          <CartButton />
         </nav>
-        <button onClick={() => setOpen(!open)} className="md:hidden" aria-label="Menu">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <CartButton />
+          <button onClick={() => setOpen(!open)} aria-label="Menu" className="grid h-10 w-10 place-items-center">
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
       {open && (
         <div className="border-t border-border md:hidden">
@@ -47,10 +60,10 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
-            <a href="https://wa.me/919095040509" target="_blank" rel="noreferrer"
+            <button onClick={() => { setOpen(false); setCartOpen(true); }}
               className="mt-2 rounded-full gradient-gold-bg px-5 py-2 text-center text-sm font-semibold text-primary-foreground">
-              Order on WhatsApp
-            </a>
+              View Cart ({totalItems})
+            </button>
           </nav>
         </div>
       )}
