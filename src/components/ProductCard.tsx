@@ -1,7 +1,7 @@
 import type { Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 export function ProductCard({ p }: { p: Product }) {
@@ -9,6 +9,22 @@ export function ProductCard({ p }: { p: Product }) {
   const { items, add, setQty } = useCart();
   const inCart = items.find((i) => i.id === p.id);
   const [open, setOpen] = useState(false);
+
+  // Mobile back button should close the modal instead of leaving the page
+  useEffect(() => {
+    if (!open) return;
+    const state = { productModal: p.id };
+    window.history.pushState(state, "");
+    const onPop = () => setOpen(false);
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      // If modal closed by other means (button/overlay), clean up the history entry
+      if (window.history.state && (window.history.state as any).productModal === p.id) {
+        window.history.back();
+      }
+    };
+  }, [open, p.id]);
 
   const QtyControl = ({ size = "sm" }: { size?: "sm" | "lg" }) =>
     inCart ? (
