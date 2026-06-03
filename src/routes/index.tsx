@@ -118,7 +118,7 @@ function Index() {
       {/* Featured products */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <SectionHeader eyebrow="Bestsellers" title="Customer favourites" />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-3 gap-3 sm:gap-5 lg:grid-cols-4">
           {products.slice(0, 8).map((p) => <ProductCard key={p.id} p={p} />)}
         </div>
         <div className="mt-12 text-center">
