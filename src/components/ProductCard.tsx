@@ -1,7 +1,7 @@
 import type { Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { Minus, Plus, ShoppingBag, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 export function ProductCard({ p }: { p: Product }) {
