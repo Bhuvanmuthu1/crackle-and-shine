@@ -10,6 +10,22 @@ export function ProductCard({ p }: { p: Product }) {
   const inCart = items.find((i) => i.id === p.id);
   const [open, setOpen] = useState(false);
 
+  // Mobile back button should close the modal instead of leaving the page
+  useEffect(() => {
+    if (!open) return;
+    const state = { productModal: p.id };
+    window.history.pushState(state, "");
+    const onPop = () => setOpen(false);
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      // If modal closed by other means (button/overlay), clean up the history entry
+      if (window.history.state && (window.history.state as any).productModal === p.id) {
+        window.history.back();
+      }
+    };
+  }, [open, p.id]);
+
   const QtyControl = ({ size = "sm" }: { size?: "sm" | "lg" }) =>
     inCart ? (
       <div className={`flex items-center justify-between rounded-full border border-[color:var(--gold)]/40 p-1 ${size === "lg" ? "p-1.5" : ""}`}>
