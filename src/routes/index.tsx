@@ -61,9 +61,9 @@ function Index() {
               <Link to="/products" className="group inline-flex items-center gap-2 rounded-full gradient-gold-bg px-7 py-3.5 font-semibold text-primary-foreground glow transition-transform hover:scale-105">
                 Explore Catalogue <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <a href="/price-list.pdf" download className="inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)]/40 px-7 py-3.5 font-semibold text-gold backdrop-blur transition-colors hover:bg-[color:var(--gold)]/10">
+              <Link to="/price-list" className="inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)]/40 px-7 py-3.5 font-semibold text-gold backdrop-blur transition-colors hover:bg-[color:var(--gold)]/10">
                 <Download className="h-4 w-4" /> Price List
-              </a>
+              </Link>
             </div>
             <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-4">
               {[
