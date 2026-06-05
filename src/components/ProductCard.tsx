@@ -48,30 +48,30 @@ export function ProductCard({ p }: { p: Product }) {
 
   return (
     <>
-      <div className="group relative overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:border-[color:var(--gold)]/40 hover:ember-glow">
+      <div className="group relative min-w-0 overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:border-[color:var(--gold)]/40 hover:ember-glow">
         <button type="button" onClick={() => setOpen(true)} className="block w-full text-left" aria-label={`View details for ${p.name}`}>
           <div className="relative aspect-square overflow-hidden">
             <img src={p.image} alt={p.name} loading="lazy" width={400} height={400}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent" />
             {p.tag && (
-              <span className="absolute left-3 top-3 rounded-full gradient-gold-bg px-3 py-1 text-xs font-bold text-primary-foreground">
+              <span className="absolute left-1.5 top-1.5 rounded-full gradient-gold-bg px-2 py-0.5 text-[9px] font-bold text-primary-foreground sm:left-3 sm:top-3 sm:px-3 sm:py-1 sm:text-xs">
                 {p.tag}
               </span>
             )}
-            <span className="absolute right-3 top-3 rounded-full bg-destructive px-3 py-1 text-xs font-bold text-destructive-foreground">
+            <span className="absolute right-1.5 top-1.5 rounded-full bg-destructive px-2 py-0.5 text-[9px] font-bold text-destructive-foreground sm:right-3 sm:top-3 sm:px-3 sm:py-1 sm:text-xs">
               {off}% OFF
             </span>
           </div>
-          <div className="px-4 pt-4">
-            <h3 className="text-sm font-semibold leading-snug min-h-[2.5rem]">{p.name}</h3>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-xl font-bold gradient-text">₹{p.price}</span>
-              <span className="text-xs text-muted-foreground line-through">₹{p.mrp}</span>
+          <div className="px-2 pt-2 sm:px-4 sm:pt-4">
+            <h3 className="text-[11px] font-semibold leading-snug min-h-[2.5rem] sm:text-sm">{p.name}</h3>
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0 sm:mt-3 sm:gap-2">
+              <span className="text-base font-bold gradient-text sm:text-xl">₹{p.price}</span>
+              <span className="text-[10px] text-muted-foreground line-through sm:text-xs">₹{p.mrp}</span>
             </div>
           </div>
         </button>
-        <div className="p-4 pt-3">
+        <div className="p-2 pt-2 sm:p-4 sm:pt-3">
           <QtyControl />
         </div>
       </div>
