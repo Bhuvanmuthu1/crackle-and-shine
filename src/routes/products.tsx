@@ -32,14 +32,14 @@ function ProductsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-12">
+      <section className="mx-auto max-w-7xl px-3 py-12 sm:px-6">
         <div className="flex flex-wrap justify-center gap-2">
           <FilterBtn active={active === "all"} onClick={() => setActive("all")}>All</FilterBtn>
           {categories.map((c) => (
             <FilterBtn key={c.id} active={active === c.id} onClick={() => setActive(c.id)}>{c.name}</FilterBtn>
           ))}
         </div>
-        <div className="mt-12 grid grid-cols-3 gap-3 sm:gap-5 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-3 gap-2 sm:gap-5 lg:grid-cols-4">
           {filtered.map((p) => <ProductCard key={p.id} p={p} />)}
         </div>
       </section>
