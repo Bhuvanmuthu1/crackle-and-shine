@@ -28,50 +28,50 @@ export function ProductCard({ p }: { p: Product }) {
 
   const QtyControl = ({ size = "sm" }: { size?: "sm" | "lg" }) =>
     inCart ? (
-      <div className={`flex items-center justify-between rounded-full border border-[color:var(--gold)]/40 p-1 ${size === "lg" ? "p-1.5" : ""}`}>
+      <div className={`flex items-center justify-between gap-1 rounded-full border border-[color:var(--gold)]/40 p-1 ${size === "lg" ? "p-1.5" : ""}`}>
         <button onClick={() => setQty(p.id, inCart.qty - 1)} aria-label="Decrease"
-          className={`grid place-items-center rounded-full bg-secondary text-foreground hover:bg-[color:var(--gold)]/20 ${size === "lg" ? "h-10 w-10" : "h-8 w-8"}`}>
+          className={`grid shrink-0 place-items-center rounded-full bg-secondary text-foreground hover:bg-[color:var(--gold)]/20 ${size === "lg" ? "h-10 w-10" : "h-7 w-7 sm:h-8 sm:w-8"}`}>
           <Minus className="h-4 w-4" />
         </button>
-        <span className={`font-bold ${size === "lg" ? "text-base" : "text-sm"}`}>{inCart.qty} in cart</span>
+        <span className={`min-w-0 truncate text-center font-bold ${size === "lg" ? "text-base" : "text-[11px] sm:text-sm"}`}>{inCart.qty}{size === "lg" ? " in cart" : ""}</span>
         <button onClick={() => setQty(p.id, inCart.qty + 1)} aria-label="Increase"
-          className={`grid place-items-center rounded-full gradient-gold-bg text-primary-foreground ${size === "lg" ? "h-10 w-10" : "h-8 w-8"}`}>
+          className={`grid shrink-0 place-items-center rounded-full gradient-gold-bg text-primary-foreground ${size === "lg" ? "h-10 w-10" : "h-7 w-7 sm:h-8 sm:w-8"}`}>
           <Plus className="h-4 w-4" />
         </button>
       </div>
     ) : (
       <button onClick={() => add({ id: p.id, name: p.name, price: p.price, mrp: p.mrp, image: p.image })}
-        className={`flex w-full items-center justify-center gap-2 rounded-full gradient-gold-bg font-semibold text-primary-foreground transition-transform hover:scale-[1.02] ${size === "lg" ? "py-3 text-base" : "py-2 text-sm"}`}>
-        <ShoppingBag className="h-4 w-4" /> Add to Cart
+        className={`flex w-full items-center justify-center gap-1.5 rounded-full gradient-gold-bg font-semibold text-primary-foreground transition-transform hover:scale-[1.02] ${size === "lg" ? "py-3 text-base" : "py-2 text-[11px] sm:text-sm"}`}>
+        <ShoppingBag className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="sm:hidden">Add</span><span className="hidden sm:inline">Add to Cart</span>
       </button>
     );
 
   return (
     <>
-      <div className="group relative overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:border-[color:var(--gold)]/40 hover:ember-glow">
+      <div className="group relative min-w-0 overflow-hidden rounded-2xl border border-border bg-card transition-all hover:-translate-y-1 hover:border-[color:var(--gold)]/40 hover:ember-glow">
         <button type="button" onClick={() => setOpen(true)} className="block w-full text-left" aria-label={`View details for ${p.name}`}>
           <div className="relative aspect-square overflow-hidden">
             <img src={p.image} alt={p.name} loading="lazy" width={400} height={400}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent" />
             {p.tag && (
-              <span className="absolute left-3 top-3 rounded-full gradient-gold-bg px-3 py-1 text-xs font-bold text-primary-foreground">
+              <span className="absolute left-1.5 top-1.5 rounded-full gradient-gold-bg px-2 py-0.5 text-[9px] font-bold text-primary-foreground sm:left-3 sm:top-3 sm:px-3 sm:py-1 sm:text-xs">
                 {p.tag}
               </span>
             )}
-            <span className="absolute right-3 top-3 rounded-full bg-destructive px-3 py-1 text-xs font-bold text-destructive-foreground">
+            <span className="absolute right-1.5 top-1.5 rounded-full bg-destructive px-2 py-0.5 text-[9px] font-bold text-destructive-foreground sm:right-3 sm:top-3 sm:px-3 sm:py-1 sm:text-xs">
               {off}% OFF
             </span>
           </div>
-          <div className="px-4 pt-4">
-            <h3 className="text-sm font-semibold leading-snug min-h-[2.5rem]">{p.name}</h3>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-xl font-bold gradient-text">₹{p.price}</span>
-              <span className="text-xs text-muted-foreground line-through">₹{p.mrp}</span>
+          <div className="px-2 pt-2 sm:px-4 sm:pt-4">
+            <h3 className="text-[11px] font-semibold leading-snug min-h-[2.5rem] sm:text-sm">{p.name}</h3>
+            <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0 sm:mt-3 sm:gap-2">
+              <span className="text-base font-bold gradient-text sm:text-xl">₹{p.price}</span>
+              <span className="text-[10px] text-muted-foreground line-through sm:text-xs">₹{p.mrp}</span>
             </div>
           </div>
         </button>
-        <div className="p-4 pt-3">
+        <div className="p-2 pt-2 sm:p-4 sm:pt-3">
           <QtyControl />
         </div>
       </div>
