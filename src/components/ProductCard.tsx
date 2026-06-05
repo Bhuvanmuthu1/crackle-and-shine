@@ -28,21 +28,21 @@ export function ProductCard({ p }: { p: Product }) {
 
   const QtyControl = ({ size = "sm" }: { size?: "sm" | "lg" }) =>
     inCart ? (
-      <div className={`flex items-center justify-between rounded-full border border-[color:var(--gold)]/40 p-1 ${size === "lg" ? "p-1.5" : ""}`}>
+      <div className={`flex items-center justify-between gap-1 rounded-full border border-[color:var(--gold)]/40 p-1 ${size === "lg" ? "p-1.5" : ""}`}>
         <button onClick={() => setQty(p.id, inCart.qty - 1)} aria-label="Decrease"
-          className={`grid place-items-center rounded-full bg-secondary text-foreground hover:bg-[color:var(--gold)]/20 ${size === "lg" ? "h-10 w-10" : "h-8 w-8"}`}>
+          className={`grid shrink-0 place-items-center rounded-full bg-secondary text-foreground hover:bg-[color:var(--gold)]/20 ${size === "lg" ? "h-10 w-10" : "h-7 w-7 sm:h-8 sm:w-8"}`}>
           <Minus className="h-4 w-4" />
         </button>
-        <span className={`font-bold ${size === "lg" ? "text-base" : "text-sm"}`}>{inCart.qty} in cart</span>
+        <span className={`min-w-0 truncate text-center font-bold ${size === "lg" ? "text-base" : "text-[11px] sm:text-sm"}`}>{inCart.qty}{size === "lg" ? " in cart" : ""}</span>
         <button onClick={() => setQty(p.id, inCart.qty + 1)} aria-label="Increase"
-          className={`grid place-items-center rounded-full gradient-gold-bg text-primary-foreground ${size === "lg" ? "h-10 w-10" : "h-8 w-8"}`}>
+          className={`grid shrink-0 place-items-center rounded-full gradient-gold-bg text-primary-foreground ${size === "lg" ? "h-10 w-10" : "h-7 w-7 sm:h-8 sm:w-8"}`}>
           <Plus className="h-4 w-4" />
         </button>
       </div>
     ) : (
       <button onClick={() => add({ id: p.id, name: p.name, price: p.price, mrp: p.mrp, image: p.image })}
-        className={`flex w-full items-center justify-center gap-2 rounded-full gradient-gold-bg font-semibold text-primary-foreground transition-transform hover:scale-[1.02] ${size === "lg" ? "py-3 text-base" : "py-2 text-sm"}`}>
-        <ShoppingBag className="h-4 w-4" /> Add to Cart
+        className={`flex w-full items-center justify-center gap-1.5 rounded-full gradient-gold-bg font-semibold text-primary-foreground transition-transform hover:scale-[1.02] ${size === "lg" ? "py-3 text-base" : "py-2 text-[11px] sm:text-sm"}`}>
+        <ShoppingBag className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="sm:hidden">Add</span><span className="hidden sm:inline">Add to Cart</span>
       </button>
     );
 
